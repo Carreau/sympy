@@ -127,7 +127,7 @@ def _getevalargs_new(eval_):
         num_no_default = len(list(filter(lambda p:p.default == p.empty, p_or_k)))-1
         num_with_default = len(list(filter(lambda p:p.default != p.empty, p_or_k)))
         if not num_with_default:
-            return num_no_default
+            return num_no_default+1
         return tuple(range(num_no_default, num_no_default+num_with_default+1))
 
 
