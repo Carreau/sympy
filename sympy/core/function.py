@@ -123,11 +123,10 @@ def _getevalargs_new(eval_):
         return None
     else:
         p_or_k = [p for n,p in parameters if p.kind == p.POSITIONAL_OR_KEYWORD]
-        # subtract 1 for cls
-        num_no_default = len(list(filter(lambda p:p.default == p.empty, p_or_k)))-1
+        num_no_default = len(list(filter(lambda p:p.default == p.empty, p_or_k)))
         num_with_default = len(list(filter(lambda p:p.default != p.empty, p_or_k)))
         if not num_with_default:
-            return num_no_default+1
+            return num_no_default
         return tuple(range(num_no_default, num_no_default+num_with_default+1))
 
 
