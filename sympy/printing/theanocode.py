@@ -213,6 +213,22 @@ def dim_handling(inputs, dim=None, dims={}, broadcastables={}, keys=(),
     return broadcastables
 
 
+def _get_args_names(fun):
+
+    dim_names = inspect.getargspec(fun)[0]
+    if sys.version_info > (3,):
+        param = inspect.signature(fun).parameters.items()
+        new_dim_names = [p for n,p in param if p.kind == p.POSITIONAL_OR_KEYWORD]
+        if dim_names != new_dim_names:
+            print('new `%s` is not `%s` for function `%s` signature `%s`' % 
+                    (new_dim_names, dim_names, fun, inspect.signature(fun))
+                )
+            assert False
+    return dim_names
+
+
+
+
 def theano_function(inputs, outputs, dtypes={}, cache=None, **kwargs):
     """ Create Theano function from SymPy expressions """
     if not theano:
@@ -221,11 +237,7 @@ def theano_function(inputs, outputs, dtypes={}, cache=None, **kwargs):
     broadcastables = dim_handling(inputs, **kwargs)
 
     # Remove keyword arguments corresponding to dim_handling
-    if sys.version_info < (3,):
-        dim_names = inspect.getargspec(dim_handling)[0]
-    else:
-        param = inspect.signature(dim_handling).parameters.items()
-        dim_names = [p for n,p in param if p.kind == p.POSITIONAL_OR_KEYWORD]
+    dim_names = _get_args_names(dim_handling)
     theano_kwargs = dict((k, v) for k, v in kwargs.items()
                                 if k not in dim_names)
 
