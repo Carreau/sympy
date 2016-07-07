@@ -493,7 +493,6 @@ def _test(*paths, **kwargs):
     # Show deprecation warnings
     import warnings
     warnings.simplefilter("error", SymPyDeprecationWarning)
-    warnings.filterwarnings('error', '.*', DeprecationWarning, module='sympy.*')
 
     test_files = t.get_test_files('sympy')
 
@@ -679,7 +678,6 @@ def _doctest(*paths, **kwargs):
     # Show deprecation warnings
     import warnings
     warnings.simplefilter("error", SymPyDeprecationWarning)
-    warnings.filterwarnings('error', '.*', DeprecationWarning, module='sympy.*')
 
     r = PyTestReporter(verbose, split=split, colors=colors,\
                        force_colors=force_colors)
