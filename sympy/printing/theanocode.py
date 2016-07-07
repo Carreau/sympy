@@ -218,7 +218,7 @@ def _get_args_names(fun):
     dim_names = inspect.getargspec(fun)[0]
     if sys.version_info > (3,):
         param = inspect.signature(fun).parameters.items()
-        new_dim_names = [p for n,p in param if p.kind == p.POSITIONAL_OR_KEYWORD]
+        new_dim_names = [n for n,p in param if p.kind == p.POSITIONAL_OR_KEYWORD]
         if dim_names != new_dim_names:
             print('new `%s` is not `%s` for function `%s` signature `%s`' % 
                     (new_dim_names, dim_names, fun, inspect.signature(fun))
